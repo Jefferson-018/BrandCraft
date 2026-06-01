@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
+  height: 100dvh;
   width: 100vw;
   background-color: var(--bg-primary);
   color: var(--text-primary);
@@ -146,7 +147,7 @@
 @media (max-width: 992px) {
   .studio-layout {
     flex-direction: column;
-    height: calc(100vh - 120px) !important; /* height adjusted for bottom toolbar */
+    height: calc(100dvh - 120px - env(safe-area-inset-bottom, 0px)) !important; /* height adjusted precisely for mobile viewport and toolbar */
     overflow: hidden;
   }
   
@@ -156,7 +157,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    height: 75vh;
+    height: 75dvh;
     z-index: 100;
     transform: translateY(100%);
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -207,17 +208,17 @@
   }
 
   .tab-content {
-    max-height: calc(75vh - 90px);
+    max-height: calc(75dvh - 90px);
   }
   
-  /* Mobile Bottom Navigation Toolbar */
+  /* Mobile Bottom Navigation Toolbar with Safe Area support */
   .mobile-toolbar {
     display: flex;
-    height: 60px;
+    height: calc(60px + env(safe-area-inset-bottom, 0px));
     background-color: var(--bg-secondary);
     border-top: 1px solid var(--border-color);
     z-index: 50;
-    padding: 8px 16px;
+    padding: 8px 16px calc(8px + env(safe-area-inset-bottom, 0px)) 16px;
     gap: 12px;
     align-items: center;
     justify-content: space-around;
