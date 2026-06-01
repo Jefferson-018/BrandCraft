@@ -124,6 +124,10 @@ export default function App() {
   const [future, setFuture] = useState([]);
   const [clipboard, setClipboard] = useState(null);
 
+  // Responsive Mobile Panels States
+  const [showMobileSidebar, setShowMobileSidebar] = useState(false);
+  const [showMobileInspector, setShowMobileInspector] = useState(false);
+
   // Helper to snapshot current state before mutation
   const saveToHistory = (customCanvas = canvasData, customElements = elements) => {
     setPast(prev => [...prev, { canvasData: JSON.parse(JSON.stringify(customCanvas)), elements: JSON.parse(JSON.stringify(customElements)) }].slice(-50));
@@ -684,14 +688,17 @@ export default function App() {
 
       {/* Main Designer Grid Workspace */}
       <main className="studio-layout">
-        <Sidebar 
-          onAddText={handleAddText}
-          onAddShape={handleAddShape}
-          onAddImage={handleAddImage}
-          onAddIcon={handleAddIcon}
-          onUpdateBackground={handleUpdateCanvas}
-          onSelectTemplate={handleSelectTemplate}
-        />
+        <div className={`sidebar-wrapper ${showMobileSidebar ? 'active' : ''}`}>
+          <button className="mobile-close-btn" onClick={() => setShowMobileSidebar(false)}>✕ Fechar</button>
+          <Sidebar 
+            onAddText={handleAddText}
+            onAddShape={handleAddShape}
+            onAddImage={handleAddImage}
+            onAddIcon={handleAddIcon}
+            onUpdateBackground={handleUpdateCanvas}
+            onSelectTemplate={handleSelectTemplate}
+          />
+        </div>
         
         <Canvas 
           canvasData={canvasData}
@@ -703,19 +710,44 @@ export default function App() {
           onDeselectAll={() => setSelectedId(null)}
         />
         
-        <Inspector 
-          canvasData={canvasData}
-          elements={elements}
-          selectedId={selectedId}
-          onSelectElement={setSelectedId}
-          onUpdateCanvas={handleUpdateCanvas}
-          onUpdateElement={handleUpdateElement}
-          onDeleteElement={handleDeleteElement}
-          onDuplicateElement={handleDuplicateElement}
-          onClearCanvas={handleClearCanvas}
-          onExportPNG={handleExportPNG}
-        />
+        <div className={`inspector-wrapper ${showMobileInspector ? 'active' : ''}`}>
+          <button className="mobile-close-btn" onClick={() => setShowMobileInspector(false)}>✕ Fechar</button>
+          <Inspector 
+            canvasData={canvasData}
+            elements={elements}
+            selectedId={selectedId}
+            onSelectElement={setSelectedId}
+            onUpdateCanvas={handleUpdateCanvas}
+            onUpdateElement={handleUpdateElement}
+            onDeleteElement={handleDeleteElement}
+            onDuplicateElement={handleDuplicateElement}
+            onClearCanvas={handleClearCanvas}
+            onExportPNG={handleExportPNG}
+          />
+        </div>
       </main>
+
+      {/* Mobile Floating Action Bar */}
+      <div className="mobile-toolbar">
+        <button 
+          className={`mobile-tool-btn ${showMobileSidebar ? 'active' : ''}`}
+          onClick={() => {
+            setShowMobileSidebar(!showMobileSidebar);
+            setShowMobileInspector(false);
+          }}
+        >
+          🎨 Elementos
+        </button>
+        <button 
+          className={`mobile-tool-btn ${showMobileInspector ? 'active' : ''}`}
+          onClick={() => {
+            setShowMobileInspector(!showMobileInspector);
+            setShowMobileSidebar(false);
+          }}
+        >
+          ⚙️ Ajustes & Camadas
+        </button>
+      </div>
     </div>
   );
 }

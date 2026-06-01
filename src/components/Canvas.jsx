@@ -104,6 +104,7 @@ export default function Canvas({
     const initialElY = el.y;
 
     const handleTouchMove = (moveEvent) => {
+      if (moveEvent.cancelable) moveEvent.preventDefault();
       if (!canvasRef.current) return;
       const moveTouch = moveEvent.touches[0];
       const dx = moveTouch.clientX - startX;
@@ -241,6 +242,7 @@ export default function Canvas({
     const initialFontSize = el.fontSize || 24;
 
     const handleTouchMove = (moveEvent) => {
+      if (moveEvent.cancelable) moveEvent.preventDefault();
       if (!canvasRef.current) return;
       const moveTouch = moveEvent.touches[0];
       const dx = moveTouch.clientX - startX;

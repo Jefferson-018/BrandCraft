@@ -129,37 +129,121 @@
   color: var(--text-muted);
 }
 
+/* Desktop Wrappers Behavior */
+.sidebar-wrapper, .inspector-wrapper {
+  display: contents; /* layout ignores wrapper and layouts Sidebar/Inspector directly */
+}
+
+.mobile-close-btn {
+  display: none;
+}
+
+.mobile-toolbar {
+  display: none;
+}
+
 /* Responsive Mobile Layout Adaptations */
 @media (max-width: 992px) {
   .studio-layout {
     flex-direction: column;
-    overflow-y: auto;
-    height: auto;
+    height: calc(100vh - 120px) !important; /* height adjusted for bottom toolbar */
+    overflow: hidden;
+  }
+  
+  .sidebar-wrapper, .inspector-wrapper {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 75vh;
+    z-index: 100;
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background-color: var(--bg-secondary);
+    border-top: 1px solid var(--border-color);
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.6);
+    border-radius: 20px 20px 0 0;
+    overflow: hidden;
+  }
+  
+  .sidebar-wrapper.active, .inspector-wrapper.active {
+    transform: translateY(0);
   }
   
   .sidebar, .inspector {
     width: 100% !important;
-    height: auto !important;
+    height: 100% !important;
     border: none !important;
   }
   
-  .sidebar {
-    border-bottom: 1px solid var(--border-color) !important;
-    max-height: 500px;
+  .mobile-close-btn {
+    display: block;
+    position: absolute;
+    top: 12px;
+    right: 20px;
+    z-index: 105;
+    background-color: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   }
-  
-  .inspector {
-    border-top: 1px solid var(--border-color) !important;
+
+  .mobile-close-btn:hover {
+    background-color: var(--primary);
+    border-color: var(--primary-hover);
   }
   
   .canvas-viewport {
-    height: 65vh !important;
-    min-height: 450px;
+    height: 100% !important;
     padding: 20px;
-    background-color: rgba(9, 9, 12, 0.6);
+    background-color: rgba(9, 9, 12, 0.65);
+    flex: 1;
   }
 
   .tab-content {
-    max-height: 400px;
+    max-height: calc(75vh - 90px);
+  }
+  
+  /* Mobile Bottom Navigation Toolbar */
+  .mobile-toolbar {
+    display: flex;
+    height: 60px;
+    background-color: var(--bg-secondary);
+    border-top: 1px solid var(--border-color);
+    z-index: 50;
+    padding: 8px 16px;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-around;
+  }
+  
+  .mobile-tool-btn {
+    flex: 1;
+    height: 44px;
+    background-color: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  
+  .mobile-tool-btn.active {
+    background-color: rgba(168, 85, 247, 0.08);
+    border-color: var(--primary);
+    color: var(--primary-hover);
+    box-shadow: 0 0 12px var(--primary-glow);
   }
 }
