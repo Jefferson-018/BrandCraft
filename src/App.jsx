@@ -3,7 +3,7 @@ import Sidebar from './components/Sidebar';
 import Canvas from './components/Canvas';
 import Inspector from './components/Inspector';
 import { exportCanvasToImage } from './utils/exportImage';
-import { Undo, Redo } from 'lucide-react';
+import { Undo, Redo, Paintbrush, Sliders, Shapes } from 'lucide-react';
 import './App.css';
 
 // Default initial state (SaaS Promotion preset)
@@ -655,7 +655,9 @@ export default function App() {
       {/* Studio Header Brand */}
       <header className="app-header glass-panel">
         <div className="logo-section">
-          <div className="logo-icon">🎨</div>
+          <div className="logo-icon" style={{ display: 'flex', alignItems: 'center' }}>
+            <Paintbrush size={22} style={{ color: 'var(--primary)', filter: 'drop-shadow(0 0 8px var(--primary-glow))' }} />
+          </div>
           <h1>BrandCraft</h1>
           <span>Beta SaaS</span>
         </div>
@@ -686,8 +688,8 @@ export default function App() {
         </div>
       </header>
 
-      {/* Main Designer Grid Workspace */}
-      <main className="studio-layout">
+      {/* Main Designer Grid Workspace with conditional panel open class for split mobile layout */}
+      <main className={`studio-layout ${showMobileSidebar || showMobileInspector ? 'panel-open' : ''}`}>
         <div className={`sidebar-wrapper ${showMobileSidebar ? 'active' : ''}`}>
           <button className="mobile-close-btn" onClick={() => setShowMobileSidebar(false)}>✕ Fechar</button>
           <Sidebar 
@@ -727,7 +729,7 @@ export default function App() {
         </div>
       </main>
 
-      {/* Mobile Floating Action Bar */}
+      {/* Mobile Floating Action Bar with Upgraded premium Vector Icons */}
       <div className="mobile-toolbar">
         <button 
           className={`mobile-tool-btn ${showMobileSidebar ? 'active' : ''}`}
@@ -736,7 +738,7 @@ export default function App() {
             setShowMobileInspector(false);
           }}
         >
-          🎨 Elementos
+          <Shapes size={16} /> Elementos
         </button>
         <button 
           className={`mobile-tool-btn ${showMobileInspector ? 'active' : ''}`}
@@ -745,7 +747,7 @@ export default function App() {
             setShowMobileSidebar(false);
           }}
         >
-          ⚙️ Ajustes & Camadas
+          <Sliders size={16} /> Ajustes & Camadas
         </button>
       </div>
     </div>

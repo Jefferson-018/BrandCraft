@@ -1,5 +1,4 @@
-import React from 'react';
-import { Trash2, Copy, ChevronUp, ChevronDown, Download, AlignLeft, AlignCenter, AlignRight, Bold, Italic } from 'lucide-react';
+import { Trash2, Copy, ChevronUp, ChevronDown, Download, AlignLeft, AlignCenter, AlignRight, Bold, Italic, Type, Square, Sparkles, Image } from 'lucide-react';
 import './Inspector.css';
 
 // Preset colors for sliders
@@ -513,7 +512,12 @@ export default function Inspector({
                   displayName = `Ícone: ${el.content}`;
                 }
 
-                const iconSymbol = el.type === 'text' ? '📝' : (el.type === 'shape' ? '🔷' : (el.type === 'icon' ? '⭐' : '🖼️'));
+                const renderLayerIcon = (type) => {
+                  if (type === 'text') return <Type size={13} style={{ color: 'var(--primary-hover)' }} />;
+                  if (type === 'shape') return <Square size={13} style={{ color: 'var(--secondary)' }} />;
+                  if (type === 'icon') return <Sparkles size={13} style={{ color: 'var(--accent)' }} />;
+                  return <Image size={13} style={{ color: '#e4e4e7' }} />;
+                };
 
                 return (
                   <div 
@@ -522,7 +526,9 @@ export default function Inspector({
                     onClick={() => onSelectElement(el.id)}
                   >
                     <div className="layer-info">
-                      <span className="layer-symbol">{iconSymbol}</span>
+                      <span className="layer-symbol" style={{ display: 'flex', alignItems: 'center' }}>
+                        {renderLayerIcon(el.type)}
+                      </span>
                       <span className="layer-name">{displayName}</span>
                     </div>
 
