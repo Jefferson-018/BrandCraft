@@ -257,7 +257,7 @@ export default function Sidebar({ onAddText, onAddShape, onAddImage, onAddIcon, 
                     key={color}
                     className="solid-color-dot"
                     style={{ backgroundColor: color }}
-                    onClick={() => onUpdateBackground({ type: 'color', value: color })}
+                    onClick={() => onUpdateBackground({ background: { type: 'color', value: color } })}
                   />
                 ))}
               </div>
@@ -271,7 +271,7 @@ export default function Sidebar({ onAddText, onAddShape, onAddImage, onAddIcon, 
                     key={idx}
                     className="gradient-bar"
                     style={{ background: `linear-gradient(135deg, ${grad.color1}, ${grad.color2})` }}
-                    onClick={() => onUpdateBackground({ type: 'gradient', value: grad })}
+                    onClick={() => onUpdateBackground({ background: { type: 'gradient', value: grad } })}
                   >
                     <span>{grad.name}</span>
                   </button>
@@ -287,7 +287,7 @@ export default function Sidebar({ onAddText, onAddShape, onAddImage, onAddIcon, 
                     key={idx}
                     className="bg-img-card"
                     style={{ backgroundImage: `url(${imgUrl})` }}
-                    onClick={() => onUpdateBackground({ type: 'image', value: imgUrl })}
+                    onClick={() => onUpdateBackground({ background: { type: 'image', value: imgUrl } })}
                   />
                 ))}
               </div>
